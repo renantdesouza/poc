@@ -1,0 +1,4 @@
+rootProject.name = 'spreadsheet-poc'
+include 'poc'
+findProject(':poc')?.name = 'spreadsheet-poc'
+
