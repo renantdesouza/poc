@@ -4,8 +4,8 @@
     <bytecodeTargetLevel>
       <module name="spreadsheet-poc-spreadsheet-poc_main" target="1.5" />
       <module name="spreadsheet-poc-spreadsheet-poc_test" target="1.5" />
-      <module name="spreadsheet-poc_main" target="1.5" />
-      <module name="spreadsheet-poc_test" target="1.5" />
+      <module name="spreadsheet-poc_main" target="1.7" />
+      <module name="spreadsheet-poc_test" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

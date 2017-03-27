@@ -5,12 +5,11 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.sheets.v4.SheetsScopes;
-import com.google.api.services.sheets.v4.model.*;
 import com.google.api.services.sheets.v4.Sheets;
+import com.google.api.services.sheets.v4.SheetsScopes;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,16 +62,16 @@ public class Quickstart {
     public static void main(String[] args) throws IOException {
         String spreadsheetId = "1R9kkICgd6y7T152IvJ4g5yQDnk7NmzKkuwnyw660FwA";
         String range = "teste!A1:B";
-        List<List<Object>> values = getSheetsService().spreadsheets().values().get(spreadsheetId, range).execute().getValues();
+
+        Sheets.Spreadsheets sheets = getSheetsService().spreadsheets();
+        List<List<Object>> values = sheets.values().get(spreadsheetId, range).execute().getValues();
 
         if (values == null || values.size() == 0) {
             System.out.println("No data found.");
             return;
         }
 
-        for (String tag : entry.getCustomElements().getTags()) {
-            System.out.println("     " + tag + ": " + entry.getCustomElements().getValue(tag));
-        }
+
 
         System.out.println("Name, Major");
         for (List row : values) {
