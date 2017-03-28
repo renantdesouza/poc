@@ -62,7 +62,7 @@ public class Quickstart {
     public static void main(String[] args) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File("/home/renan.souza/doc" + MODE));
         String s = scanner.next();
-        System.out.println("Valor selecionado - " + s);
+        System.out.println("Selected value - " + s);
 
         try {
             Integer i = Integer.parseInt(s);
@@ -88,7 +88,7 @@ public class Quickstart {
 
                 write(array);
             } else {
-                System.out.println("Erro!");
+                System.out.println("Invalid value!");
             }
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
@@ -106,22 +106,18 @@ public class Quickstart {
             return;
         }
 
-        int line = 1;
         for (List row : values) {
-            try {
-                if (row == null) {
-                    System.out.println("Erro");
-                } else {
-                    String str = "";
-                    int size = row.size();
-                    for (int i = 0; i < size; i++) {
-                        str += i == size-1 ? row.get(i) : row.get(i) + ", ";
-                    }
-                    System.out.println(str);
-                }
-            } catch (IndexOutOfBoundsException ignored) {
-                System.out.println("Erro ao imprimir linha " + line);
+            if (row == null) {
+                System.out.println("Error");
+                continue;
             }
+
+            String str = "";
+            int size = row.size();
+            for (int i = 0; i < size; i++) {
+                str += i == size-1 ? row.get(i) : row.get(i) + ", ";
+            }
+            System.out.println(str);
         }
     }
 
