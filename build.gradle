@@ -14,5 +14,5 @@ dependencies {
     compile 'com.google.api-client:google-api-client:1.22.0'
     compile 'com.google.oauth-client:google-oauth-client-jetty:1.22.0'
     compile 'com.google.apis:google-api-services-sheets:v4-rev465-1.22.0'
-    compile group: 'com.google.gdata', name: 'core', version: '1.47.1'
+    //compile group: 'com.google.gdata', name: 'core', version: '1.47.1'
 }

@@ -24,7 +24,7 @@ public class Quickstart {
 
     private static final String MODE = canWrite ? "-write" : "-read";
 
-    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+    private static final JsonFactory FACTORY = JacksonFactory.getDefaultInstance();
 
     private static Sheets sheets;
 
@@ -42,11 +42,11 @@ public class Quickstart {
 
     public static Credential authorize() throws IOException, GeneralSecurityException {
         InputStream in = Quickstart.class.getResourceAsStream("/client_secret.json");
-        GoogleClientSecrets secrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+        GoogleClientSecrets secrets = GoogleClientSecrets.load(FACTORY, new InputStreamReader(in));
         File file = new File(System.getProperty("user.home"), ".credentials/sheets.googleapis.com-java-quickstart");
 
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow
-                .Builder(GoogleNetHttpTransport.newTrustedTransport(), JSON_FACTORY, secrets, Arrays.asList(SheetsScopes.SPREADSHEETS))
+                .Builder(GoogleNetHttpTransport.newTrustedTransport(), FACTORY, secrets, Arrays.asList(SheetsScopes.SPREADSHEETS))
                 .setDataStoreFactory(new FileDataStoreFactory(file))
                 .setAccessType("offline")
                 .build();
@@ -56,28 +56,28 @@ public class Quickstart {
     }
 
     public static Sheets getSheetsService() throws IOException, GeneralSecurityException {
-        return new Sheets.Builder(GoogleNetHttpTransport.newTrustedTransport(), JSON_FACTORY, authorize()).setApplicationName("Sheets API").build();
+        return new Sheets.Builder(GoogleNetHttpTransport.newTrustedTransport(), FACTORY, authorize()).setApplicationName("Sheets API").build();
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File("/home/renan.souza/doc" + MODE));
-        String s = scanner.next();
+        Scanner scan = new Scanner(new File("/home/renan.souza/doc" + MODE));
+        String s = scan.next();
         System.out.println("Selected value - " + s);
 
         try {
-            Integer i = Integer.parseInt(s);
-            if (i == 1) {
+            Integer p = Integer.parseInt(s);
+            if (p == 1) {
                 print();
-            } else if (i == 2) {
+            } else if (p == 2) {
                 List<String> strs = new ArrayList<>();
-                while(true) {
-                    s = scanner.next();
+                while (scan.hasNext()) {
+                    s = scan.next();
                     if (s == null || s.equals(":q")) {
                         break;
                     } else {
                         strs.add(s);
                     }
-                    scanner.reset();
+                    scan.reset();
                 }
 
                 String[] array = new String[strs.size()];
