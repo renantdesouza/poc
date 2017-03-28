@@ -21,6 +21,7 @@ import java.util.Scanner;
 public class Quickstart {
 
     private static final boolean canWrite = false;
+    //private static final boolean canWrite = true;
 
     private static final String MODE = canWrite ? "-write" : "-read";
 
@@ -59,39 +60,46 @@ public class Quickstart {
         return new Sheets.Builder(GoogleNetHttpTransport.newTrustedTransport(), FACTORY, authorize()).setApplicationName("Sheets API").build();
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
-        Scanner scan = new Scanner(new File("/home/renan.souza/doc" + MODE));
-        String s = scan.next();
-        System.out.println("Selected value - " + s);
-
+    public static void main(String...args) {
+        Scanner scan = null;
         try {
-            Integer p = Integer.parseInt(s);
-            if (p == 1) {
-                print();
-            } else if (p == 2) {
-                List<String> strs = new ArrayList<>();
-                while (scan.hasNext()) {
-                    s = scan.next();
-                    if (s == null || s.equals(":q")) {
-                        break;
-                    } else {
-                        strs.add(s);
-                    }
-                    scan.reset();
-                }
+            scan = new Scanner(new File("/home/renan.souza/doc" + MODE));
+        } catch (FileNotFoundException fnfe) {
+            System.out.print("File not found");
+        }
 
-                String[] array = new String[strs.size()];
-                int index = 0;
-                for (String str : strs) {
-                    array[index++] = str;
+        String s = scan.next();
+        if (s.contains("r")) {
+            safePrint();
+        } else if (s.contains("w")) {
+            List<String> strs = new ArrayList<>();
+            while (scan.hasNext()) {
+                s = scan.next();
+                if (s == null || s.equals(":q")) {
+                    break;
+                } else {
+                    strs.add(s);
                 }
-
-                write(array);
-            } else {
-                System.out.println("Invalid value!");
+                scan.reset();
             }
-        } catch (IOException | NumberFormatException e) {
-            e.printStackTrace();
+
+            String[] array = new String[strs.size()];
+            int index = 0;
+            for (String str : strs) {
+                array[index++] = str;
+            }
+
+           safeWrite(args);
+        } else {
+            System.out.println("Invalid value!");
+        }
+    }
+
+    private static void safePrint() {
+        try {
+            print();
+        } catch (IOException e) {
+            System.out.print("Error");
         }
     }
 
@@ -118,6 +126,14 @@ public class Quickstart {
                 str += i == size-1 ? row.get(i) : row.get(i) + ", ";
             }
             System.out.println(str);
+        }
+    }
+
+    private static void safeWrite(String...args) {
+        try {
+            write(args);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
