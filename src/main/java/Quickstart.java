@@ -91,9 +91,9 @@ public class Quickstart {
         String s = scan.next();
         try  {
             if (s.equalsIgnoreCase("r")) {
-                safePrint(toArray(docValues(scan)));
+                print(toArray(docValues(scan)));
             } else if (s.equalsIgnoreCase("w")) {
-                safeWrite(toArray(docValues(scan)));
+                write(toArray(docValues(scan)));
             } else {
                 System.out.println("Invalid value!");
             }
@@ -111,10 +111,10 @@ public class Quickstart {
         }
     }
 
-    private static void safePrint(String...args) throws IOException {
+    private static void print(String...args) throws IOException {
         String id = "1R9kkICgd6y7T152IvJ4g5yQDnk7NmzKkuwnyw660FwA";
 
-        GoogleSpreadsheetID sheetId = safeGetSheetId(args);
+        GoogleSpreadsheetID sheetId = getSheetId(args);
         if (sheetId == null) {
             return;
         }
@@ -143,14 +143,14 @@ public class Quickstart {
         }
     }
 
-    private static void safeWrite(String...args) throws IOException {
+    private static void write(String...args) throws IOException {
         if (args == null) {
             return;
         }
 
         Integer id = null;
         if (args.length > 0) {
-            GoogleSpreadsheetID sheetId = safeGetSheetId(args);
+            GoogleSpreadsheetID sheetId = getSheetId(args);
             if (sheetId == null) {
                 return;
             }
@@ -179,7 +179,7 @@ public class Quickstart {
         }
     }
 
-    private static GoogleSpreadsheetID safeGetSheetId(String...args) {
+    private static GoogleSpreadsheetID getSheetId(String...args) {
         try {
             return GoogleSpreadsheetID.findByValue(Integer.parseInt(args[0]));
         } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {

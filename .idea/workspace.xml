@@ -2,11 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b20155ff-ce50-41a0-a02e-0e46be12a79e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/GoogleSpreadsheetID.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/1.4/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/1.4/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/1.4/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/1.4/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/1.4/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/1.4/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/Quickstart.class" afterPath="$PROJECT_DIR$/build/classes/main/Quickstart.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Quickstart.java" afterPath="$PROJECT_DIR$/src/main/java/Quickstart.java" />
     </list>
@@ -56,8 +51,8 @@
       <file leaf-file-name="Quickstart.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Quickstart.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-27">
-              <caret line="167" column="92" lean-forward="false" selection-start-line="167" selection-start-column="75" selection-end-line="167" selection-end-column="92" />
+            <state relative-caret-position="-297">
+              <caret line="152" column="52" lean-forward="false" selection-start-line="152" selection-start-column="42" selection-end-line="152" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -101,6 +96,8 @@
       <find>scanner</find>
       <find>values</find>
       <find>toArray</find>
+      <find>safePrint</find>
+      <find>safeGetSheetId</find>
     </findStrings>
     <replaceStrings>
       <replace>batchRequests</replace>
@@ -109,6 +106,9 @@
       <replace>FACTORY</replace>
       <replace>scan</replace>
       <replace>docValues</replace>
+      <replace>print</replace>
+      <replace>write</replace>
+      <replace>getSheetId</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -1062,7 +1062,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490793383823</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="ajuste">
+      <created>1490811265237</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1490811265237</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1459,8 +1466,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Quickstart.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-27">
-          <caret line="167" column="92" lean-forward="false" selection-start-line="167" selection-start-column="75" selection-end-line="167" selection-end-column="92" />
+        <state relative-caret-position="-297">
+          <caret line="152" column="52" lean-forward="false" selection-start-line="152" selection-start-column="42" selection-end-line="152" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
