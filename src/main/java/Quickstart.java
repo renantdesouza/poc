@@ -22,9 +22,9 @@ public class Quickstart {
 
     private static final JsonFactory FACTORY = JacksonFactory.getDefaultInstance();
 
-    private static final String MODE = "-write" /*"-read"*/;
+    private static final String MODE = /*"-write"*/ "-read"/*te*/;
 
-     private static final String NUMBER_REGEX = "^(\\d+(?:[\\.\\,]\\d{1,2})?)$";
+    private static final String NUMBER_REGEX = "^(\\d+(?:[\\.\\,]\\d{1,2})?)$";
     private static final String DATE_REGEX = "[0-9]{2}\\/[0-9]{2}\\/[0-9]{2,4}";
 
     private static Sheets sheets;
@@ -51,7 +51,6 @@ public class Quickstart {
                 .setAccessType("offline")
                 .build();
 
-        System.out.println("Credentials saved");
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 
@@ -106,7 +105,7 @@ public class Quickstart {
         try {
             return new Scanner(new File("/home/renan.souza/doc" + MODE));
         } catch (FileNotFoundException fnfe) {
-            System.out.print("File not found");
+            fnfe.printStackTrace();
             return null;
         }
     }
@@ -124,13 +123,11 @@ public class Quickstart {
         List<List<Object>> values = spreadsheets.values().get(id, range).execute().getValues();
 
         if (values == null || values.size() == 0) {
-            System.out.println("No data found.");
             return;
         }
 
         for (List row : values) {
             if (row == null) {
-                System.out.println("Error");
                 continue;
             }
 
