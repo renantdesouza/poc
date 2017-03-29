@@ -22,7 +22,8 @@ public class Quickstart {
 
     private static final JsonFactory FACTORY = JacksonFactory.getDefaultInstance();
 
-    private static final String MODE = /*"-write"*/ "-read"/*te*/;
+    private static final String MODE = "-read";
+    //private static final String MODE = "-write";
 
     private static final String NUMBER_REGEX = "^(\\d+(?:[\\.\\,]\\d{1,2})?)$";
     private static final String DATE_REGEX = "[0-9]{2}\\/[0-9]{2}\\/[0-9]{2,4}";
