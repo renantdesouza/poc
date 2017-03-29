@@ -20,15 +20,14 @@ import java.util.Scanner;
 
 public class Quickstart {
 
-    //private static final boolean canWrite = false;
-    private static final boolean canWrite = true;
-
-    private static final String MODE = canWrite ? "-write" : "-read";
-
     private static final JsonFactory FACTORY = JacksonFactory.getDefaultInstance();
 
-    private static Sheets sheets;
+    private static final String MODE = "-write" /*"-read"*/;
 
+     private static final String NUMBER_REGEX = "^(\\d+(?:[\\.\\,]\\d{1,2})?)$";
+    private static final String DATE_REGEX = "[0-9]{2}\\/[0-9]{2}\\/[0-9]{2,4}";
+
+    private static Sheets sheets;
     private static Sheets.Spreadsheets spreadsheets;
 
     static {
@@ -60,6 +59,29 @@ public class Quickstart {
         return new Sheets.Builder(GoogleNetHttpTransport.newTrustedTransport(), FACTORY, authorize()).setApplicationName("Sheets API").build();
     }
 
+    private static List<String> docValues(Scanner scan) {
+        List<String> strs = new ArrayList<>();
+        while (scan.hasNext()) {
+            String s = scan.next();
+            if (s == null || s.equals(":q")) {
+                break;
+            } else {
+                strs.add(s);
+            }
+            scan.reset();
+        }
+        return strs;
+    }
+
+    private static String[] toArray(List<String> strs) {
+        String[] array = new String[strs.size()];
+        int index = 0;
+        for (String str : strs) {
+            array[index++] = str;
+        }
+        return array;
+    }
+
     public static void main(String...args) {
         Scanner scan = getScan();
         if (scan == null) {
@@ -67,29 +89,16 @@ public class Quickstart {
         }
 
         String s = scan.next();
-        if (s.startsWith("r")) {
-            safePrint();
-        } else if (s.startsWith("w")) {
-            List<String> strs = new ArrayList<>();
-            while (scan.hasNext()) {
-                s = scan.next();
-                if (s == null || s.equals(":q")) {
-                    break;
-                } else {
-                    strs.add(s);
-                }
-                scan.reset();
+        try  {
+            if (s.equalsIgnoreCase("r")) {
+                safePrint(toArray(docValues(scan)));
+            } else if (s.equalsIgnoreCase("w")) {
+                safeWrite(toArray(docValues(scan)));
+            } else {
+                System.out.println("Invalid value!");
             }
-
-            String[] array = new String[strs.size()];
-            int index = 0;
-            for (String str : strs) {
-                array[index++] = str;
-            }
-
-           safeWrite(array);
-        } else {
-            System.out.println("Invalid value!");
+        } catch(IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -102,17 +111,15 @@ public class Quickstart {
         }
     }
 
-    private static void safePrint() {
-        try {
-            print();
-        } catch (IOException e) {
-            System.out.print("Error");
-        }
-    }
-
-    private static void print() throws IOException {
+    private static void safePrint(String...args) throws IOException {
         String id = "1R9kkICgd6y7T152IvJ4g5yQDnk7NmzKkuwnyw660FwA";
-        String range = "teste!A1:B";
+
+        GoogleSpreadsheetID sheetId = safeGetSheetId(args);
+        if (sheetId == null) {
+            return;
+        }
+
+        String range = sheetId.getDesc();
 
         List<List<Object>> values = spreadsheets.values().get(id, range).execute().getValues();
 
@@ -136,29 +143,35 @@ public class Quickstart {
         }
     }
 
-    private static void safeWrite(String...args) {
-        try {
-            write(args);
-        } catch (IOException e) {
-            e.printStackTrace();
+    private static void safeWrite(String...args) throws IOException {
+        if (args == null) {
+            return;
         }
-    }
 
-    private static void write(String...args) throws IOException {
+        Integer id = null;
+        if (args.length > 0) {
+            GoogleSpreadsheetID sheetId = safeGetSheetId(args);
+            if (sheetId == null) {
+                return;
+            }
+            id = sheetId.getValue();
+            args = Arrays.copyOfRange(args, 1, args.length);
+        }
+
         String spreadsheetId = "1R9kkICgd6y7T152IvJ4g5yQDnk7NmzKkuwnyw660FwA";
 
         BatchUpdateSpreadsheetRequest batchRequest = new BatchUpdateSpreadsheetRequest();
-
         for (String arg : args) {
             CellData cell = new CellData();
             cell.setUserEnteredValue(new ExtendedValue().setStringValue(arg));
 
             String fields = "userEnteredValue" + (validate(arg, cell) ? ", userEnteredFormat.numberFormat" : "");
 
-            CellData value = new CellData().setUserEnteredValue(new ExtendedValue().setStringValue("XABLAU"));
+            List<CellData> cells = Arrays.asList(cell);
+            List<RowData> rows = Arrays.asList(new RowData().setValues(cells));
 
             AppendCellsRequest appendRequest = new AppendCellsRequest();
-            appendRequest.setSheetId(0).setRows(Arrays.asList(new RowData().setValues(Arrays.asList(cell, value)))).setFields(fields);
+            appendRequest.setSheetId(id).setRows(rows).setFields(fields);
 
             batchRequest.setRequests(Arrays.asList(new Request().setAppendCells(appendRequest)));
 
@@ -166,11 +179,20 @@ public class Quickstart {
         }
     }
 
+    private static GoogleSpreadsheetID safeGetSheetId(String...args) {
+        try {
+            return GoogleSpreadsheetID.findByValue(Integer.parseInt(args[0]));
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     private static boolean validate(String arg, CellData cell) {
         NumberFormat nf = new NumberFormat();
-        if (arg.matches("^(\\d+(?:[\\.\\,]\\d{1,2})?)$")) {
+        if (arg.matches(NUMBER_REGEX)) {
             nf.setType("NUMBER");
-        } else if (arg.replaceAll("-", "/").matches("[0-9]{2}\\/[0-9]{2}\\/[0-9]{2,4}")) {
+        } else if (arg.replaceAll("-", "/").matches(DATE_REGEX)) {
             nf.setType("DATE");
         } else {
             return false;
