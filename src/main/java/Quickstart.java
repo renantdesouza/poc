@@ -20,8 +20,8 @@ import java.util.Scanner;
 
 public class Quickstart {
 
-    private static final boolean canWrite = false;
-    //private static final boolean canWrite = true;
+    //private static final boolean canWrite = false;
+    private static final boolean canWrite = true;
 
     private static final String MODE = canWrite ? "-write" : "-read";
 
@@ -61,17 +61,15 @@ public class Quickstart {
     }
 
     public static void main(String...args) {
-        Scanner scan = null;
-        try {
-            scan = new Scanner(new File("/home/renan.souza/doc" + MODE));
-        } catch (FileNotFoundException fnfe) {
-            System.out.print("File not found");
+        Scanner scan = getScan();
+        if (scan == null) {
+            return;
         }
 
         String s = scan.next();
-        if (s.contains("r")) {
+        if (s.startsWith("r")) {
             safePrint();
-        } else if (s.contains("w")) {
+        } else if (s.startsWith("w")) {
             List<String> strs = new ArrayList<>();
             while (scan.hasNext()) {
                 s = scan.next();
@@ -89,9 +87,18 @@ public class Quickstart {
                 array[index++] = str;
             }
 
-           safeWrite(args);
+           safeWrite(array);
         } else {
             System.out.println("Invalid value!");
+        }
+    }
+
+    private static Scanner getScan() {
+        try {
+            return new Scanner(new File("/home/renan.souza/doc" + MODE));
+        } catch (FileNotFoundException fnfe) {
+            System.out.print("File not found");
+            return null;
         }
     }
 
