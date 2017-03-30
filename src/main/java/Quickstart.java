@@ -26,13 +26,15 @@ public class Quickstart {
         }
     }
 
-    private static List<String> docValues(Scanner scan) {
+    private static List<String> docValues() {
+        Scanner scan = getScan();
         if (scan == null) {
             return null;
         }
 
         List<String> strs = new ArrayList<>();
-        while (scan.hasNext()) {
+        int i = 0;
+        for (; scan.hasNext(); i++) {
             String s = scan.nextLine();
             if (s == null) {
                 break;
@@ -40,22 +42,14 @@ public class Quickstart {
             strs.add(s);
             scan.reset();
         }
-        return strs;
+        return i == 0 ? null : strs;
     }
 
     public static void main(String...args) {
-        boolean isWrite = MODE.equalsIgnoreCase("write");
-        boolean isRead = MODE.equalsIgnoreCase("read");
-
         try {
-            if (isWrite) {
-                Scanner scan = getScan();
-                if (scan == null) {
-                    return;
-                }
-
-                write(docValues(scan));
-            } else if (isRead){
+            if (MODE.equalsIgnoreCase("write")) {
+                write(docValues());
+            } else if (MODE.equalsIgnoreCase("read")){
                 print();
             } else {
                 System.out.println("Invalid value!");
@@ -67,8 +61,7 @@ public class Quickstart {
 
     private static Scanner getScan() {
         try {
-            String path = "/home/renan.souza/doc-" + prop("quickstart.mode");
-            return new Scanner(new File(path));
+            return new Scanner(new File("/home/renan.souza/doc-" + prop("quickstart.mode")));
         } catch (FileNotFoundException fnfe) {
             fnfe.printStackTrace();
             return null;

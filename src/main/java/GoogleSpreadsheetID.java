@@ -1,5 +1,5 @@
 /**
- * Used to see the range(<name>!<inicial-column><final-column>) of the sheet
+ * Used to see the range(<name>!<inicial-column(ex: A2)><final-column(ex: C)></>) of the sheet
  * */
 public enum GoogleSpreadsheetID {
 
