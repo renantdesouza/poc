@@ -35,11 +35,7 @@ public class Quickstart {
         List<String> strs = new ArrayList<>();
         int i = 0;
         for (; scan.hasNext(); i++) {
-            String s = scan.nextLine();
-            if (s == null) {
-                break;
-            }
-            strs.add(s);
+            strs.add(scan.nextLine());
             scan.reset();
         }
         return i == 0 ? null : strs;
@@ -82,10 +78,6 @@ public class Quickstart {
         }
 
         for (List row : values) {
-            if (row == null) {
-                continue;
-            }
-
             String str = "";
             int size = row.size();
             for (int i = 0; i < size; i++) {
@@ -102,14 +94,9 @@ public class Quickstart {
 
         List<RowData> rows = new ArrayList<>();
         for (String arg : args) {
-            String[] splited = arg.split(",");
-            if (splited == null) {
-                return;
-            }
-
             List<CellData> cells = new ArrayList<>();
-            for (String s : splited) {
-                cells.add(new CellData().setUserEnteredValue(new ExtendedValue().setStringValue(s)));
+            for (String cellValue : arg.split(",")) {
+                cells.add(new CellData().setUserEnteredValue(new ExtendedValue().setStringValue(cellValue)));
             }
 
             rows.add(new RowData().setValues(cells));
