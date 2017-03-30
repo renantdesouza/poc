@@ -1,3 +1,6 @@
+/**
+ * Used to see the range(<name>!<inicial-column><final-column>) of the sheet
+ * */
 public enum GoogleSpreadsheetID {
 
     TEST(0, "teste"),
@@ -9,10 +12,6 @@ public enum GoogleSpreadsheetID {
     GoogleSpreadsheetID(int value, String desc) {
         this.value = value;
         this.desc = desc;
-    }
-
-    public int getValue() {
-        return value;
     }
 
     public String getDesc() {
