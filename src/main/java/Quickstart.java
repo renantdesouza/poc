@@ -1,61 +1,29 @@
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.sheets.v4.Sheets;
-import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.*;
 
-import java.io.*;
-import java.security.GeneralSecurityException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.*;
 
 public class Quickstart {
 
-    private static final JsonFactory FACTORY = JacksonFactory.getDefaultInstance();
-
     private static final String PROPERTIES = "quickstart.properties";
+    private static final PropertyReader pr = new PropertyReader(PROPERTIES);
 
-    private static Sheets sheets;
+    private static final String GID = prop("quickstart.gid");
+    private static final String SPREADSHEET_ID = prop("quickstart.spreadsheet.id");
+    private static final String MODE = prop("quickstart.mode");
+
     private static Sheets.Spreadsheets spreadsheets;
-
-    private static PropertyReader pr;
 
     static {
         try {
-            sheets = getSheetsService();
-            spreadsheets = sheets.spreadsheets();
-            pr = new PropertyReader(PROPERTIES);
+            spreadsheets = Auth.getSheetsService().spreadsheets();
         } catch (Throwable t) {
             t.printStackTrace();
             System.exit(1);
         }
-    }
-
-    public static Credential authorize() throws IOException, GeneralSecurityException {
-        InputStream in = Quickstart.class.getResourceAsStream("/client_secret.json");
-        GoogleClientSecrets secrets = GoogleClientSecrets.load(FACTORY, new InputStreamReader(in));
-        File file = new File(System.getProperty("user.home"), ".credentials/sheets.googleapis.com-java-quickstart");
-
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow
-                .Builder(GoogleNetHttpTransport.newTrustedTransport(), FACTORY, secrets, Arrays.asList(SheetsScopes.SPREADSHEETS))
-                .setDataStoreFactory(new FileDataStoreFactory(file))
-                .setAccessType("offline")
-                .build();
-
-        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
-    }
-
-    public static Sheets getSheetsService() throws IOException, GeneralSecurityException {
-        return new Sheets.Builder(GoogleNetHttpTransport.newTrustedTransport(), FACTORY, authorize()).setApplicationName("Sheets API").build();
     }
 
     private static List<String> docValues(Scanner scan) {
@@ -76,13 +44,8 @@ public class Quickstart {
     }
 
     public static void main(String...args) {
-        String mode = prop("quickstart.mode");
-        if (mode == null) {
-            return;
-        }
-
-        boolean isWrite = mode.equalsIgnoreCase("write");
-        boolean isRead = mode.equalsIgnoreCase("read");
+        boolean isWrite = MODE.equalsIgnoreCase("write");
+        boolean isRead = MODE.equalsIgnoreCase("read");
 
         try {
             if (isWrite) {
@@ -113,8 +76,6 @@ public class Quickstart {
     }
 
     private static void print() throws IOException {
-        String id = prop("quickstart.spreadsheetId");
-
         GoogleSpreadsheetID sheetId = getSheetId();
         if (sheetId == null) {
             return;
@@ -122,8 +83,7 @@ public class Quickstart {
 
         String range = sheetId.getDesc();
 
-        List<List<Object>> values = spreadsheets.values().get(id, range).execute().getValues();
-
+        List<List<Object>> values = spreadsheets.values().get(prop("quickstart.spreadsheet.id"), range).execute().getValues();
         if (values == null || values.size() == 0) {
             return;
         }
@@ -147,11 +107,7 @@ public class Quickstart {
             return;
         }
 
-        String spreadsheetId = "1R9kkICgd6y7T152IvJ4g5yQDnk7NmzKkuwnyw660FwA";
-        Integer id = getSheetId().getValue();
-
         List<RowData> rows = new ArrayList<>();
-        List<Request> requests = new ArrayList<>();
         for (String arg : args) {
             String[] splited = arg.split(",");
             if (splited == null) {
@@ -165,14 +121,16 @@ public class Quickstart {
 
             rows.add(new RowData().setValues(cells));
         }
+        Integer id = getSheetId().getValue();
+
         AppendCellsRequest append = new AppendCellsRequest().setSheetId(id).setRows(rows).setFields("userEnteredValue");
-        requests.add(new Request().setAppendCells(append));
-        spreadsheets.batchUpdate(spreadsheetId, new BatchUpdateSpreadsheetRequest().setRequests(requests)).execute();
+        List<Request> requests = Arrays.asList(new Request().setAppendCells(append));
+        spreadsheets.batchUpdate(SPREADSHEET_ID, new BatchUpdateSpreadsheetRequest().setRequests(requests)).execute();
     }
 
     private static GoogleSpreadsheetID getSheetId() {
         try {
-            return GoogleSpreadsheetID.findByValue(Integer.parseInt(prop("quickstart.gid")));
+            return GoogleSpreadsheetID.findByValue(Integer.parseInt(GID));
         } catch (ArrayIndexOutOfBoundsException | ClassCastException | NumberFormatException e) {
             e.printStackTrace();
             return null;
