@@ -11,9 +11,13 @@ public class Quickstart {
     private static final String PROPERTIES = "quickstart.properties";
     private static final PropertyReader pr = new PropertyReader(PROPERTIES);
 
-    private static final String GID = prop("quickstart.gid");
-    private static final String SPREADSHEET_ID = prop("quickstart.spreadsheet.id");
-    private static final String MODE = prop("quickstart.mode");
+    private static final String QUICKSTART_SPREADSHEET_ID = "quickstart.spreadsheet.id";
+    private static final String QUICKSTART_GID = "quickstart.gid";
+    private static final String QUICKSTART_MODE = "quickstart.mode";
+
+    private static final String GID = prop(QUICKSTART_GID);
+    private static final String SPREADSHEET_ID = prop(QUICKSTART_SPREADSHEET_ID);
+    private static final String MODE = prop(QUICKSTART_MODE);
 
     private static Sheets.Spreadsheets spreadsheets;
 
