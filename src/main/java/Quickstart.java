@@ -150,6 +150,7 @@ public class Quickstart {
         String spreadsheetId = "1R9kkICgd6y7T152IvJ4g5yQDnk7NmzKkuwnyw660FwA";
         Integer id = getSheetId().getValue();
 
+        List<RowData> rows = new ArrayList<>();
         List<Request> requests = new ArrayList<>();
         for (String arg : args) {
             String[] splited = arg.split(",");
@@ -161,10 +162,11 @@ public class Quickstart {
             for (String s : splited) {
                 cells.add(new CellData().setUserEnteredValue(new ExtendedValue().setStringValue(s)));
             }
-            List<RowData> rows = Arrays.asList(new RowData().setValues(cells));
-            requests.add(new Request().setAppendCells(new AppendCellsRequest().setSheetId(id).setRows(rows).setFields("userEnteredValue")));
-        }
 
+            rows.add(new RowData().setValues(cells));
+        }
+        AppendCellsRequest append = new AppendCellsRequest().setSheetId(id).setRows(rows).setFields("userEnteredValue");
+        requests.add(new Request().setAppendCells(append));
         spreadsheets.batchUpdate(spreadsheetId, new BatchUpdateSpreadsheetRequest().setRequests(requests)).execute();
     }
 
