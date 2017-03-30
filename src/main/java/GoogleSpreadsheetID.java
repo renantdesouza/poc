@@ -4,7 +4,8 @@
 public enum GoogleSpreadsheetID {
 
     TEST(0, "teste"),
-    VRAU(712794908, "vrau");
+    VRAU(712794908, "vrau"),
+    GENERAL_DASHBOARD(1642845870, "General_Dashboard");
 
     private int value;
     private String desc;
@@ -12,6 +13,10 @@ public enum GoogleSpreadsheetID {
     GoogleSpreadsheetID(int value, String desc) {
         this.value = value;
         this.desc = desc;
+    }
+
+    public int getValue() {
+        return value;
     }
 
     public String getDesc() {
