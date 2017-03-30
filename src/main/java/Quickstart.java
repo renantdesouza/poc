@@ -22,19 +22,18 @@ public class Quickstart {
 
     private static final JsonFactory FACTORY = JacksonFactory.getDefaultInstance();
 
-    private static final String MODE = "-read";
-    //private static final String MODE = "-write";
-
-    private static final String NUMBER_REGEX = "^(\\d+(?:[\\.\\,]\\d{1,2})?)$";
-    private static final String DATE_REGEX = "[0-9]{2}\\/[0-9]{2}\\/[0-9]{2,4}";
+    private static final String PROPERTIES = "quickstart.properties";
 
     private static Sheets sheets;
     private static Sheets.Spreadsheets spreadsheets;
+
+    private static PropertyReader pr;
 
     static {
         try {
             sheets = getSheetsService();
             spreadsheets = sheets.spreadsheets();
+            pr = new PropertyReader(PROPERTIES);
         } catch (Throwable t) {
             t.printStackTrace();
             System.exit(1);
@@ -60,61 +59,63 @@ public class Quickstart {
     }
 
     private static List<String> docValues(Scanner scan) {
+        if (scan == null) {
+            return null;
+        }
+
         List<String> strs = new ArrayList<>();
         while (scan.hasNext()) {
-            String s = scan.next();
-            if (s == null || s.equals(":q")) {
+            String s = scan.nextLine();
+            if (s == null) {
                 break;
-            } else {
-                strs.add(s);
             }
+            strs.add(s);
             scan.reset();
         }
         return strs;
     }
 
-    private static String[] toArray(List<String> strs) {
-        String[] array = new String[strs.size()];
-        int index = 0;
-        for (String str : strs) {
-            array[index++] = str;
-        }
-        return array;
-    }
-
     public static void main(String...args) {
-        Scanner scan = getScan();
-        if (scan == null) {
+        String mode = prop("quickstart.mode");
+        if (mode == null) {
             return;
         }
 
-        String s = scan.next();
-        try  {
-            if (s.equalsIgnoreCase("r")) {
-                print(toArray(docValues(scan)));
-            } else if (s.equalsIgnoreCase("w")) {
-                write(toArray(docValues(scan)));
+        boolean isWrite = mode.equalsIgnoreCase("write");
+        boolean isRead = mode.equalsIgnoreCase("read");
+
+        try {
+            if (isWrite) {
+                Scanner scan = getScan();
+                if (scan == null) {
+                    return;
+                }
+
+                write(docValues(scan));
+            } else if (isRead){
+                print();
             } else {
                 System.out.println("Invalid value!");
             }
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private static Scanner getScan() {
         try {
-            return new Scanner(new File("/home/renan.souza/doc" + MODE));
+            String path = "/home/renan.souza/doc-" + prop("quickstart.mode");
+            return new Scanner(new File(path));
         } catch (FileNotFoundException fnfe) {
             fnfe.printStackTrace();
             return null;
         }
     }
 
-    private static void print(String...args) throws IOException {
-        String id = "1R9kkICgd6y7T152IvJ4g5yQDnk7NmzKkuwnyw660FwA";
+    private static void print() throws IOException {
+        String id = prop("quickstart.spreadsheetId");
 
-        GoogleSpreadsheetID sheetId = getSheetId(args);
+        GoogleSpreadsheetID sheetId = getSheetId();
         if (sheetId == null) {
             return;
         }
@@ -141,63 +142,47 @@ public class Quickstart {
         }
     }
 
-    private static void write(String...args) throws IOException {
+    private static void write(List<String> args) throws IOException {
         if (args == null) {
             return;
         }
 
-        Integer id = null;
-        if (args.length > 0) {
-            GoogleSpreadsheetID sheetId = getSheetId(args);
-            if (sheetId == null) {
+        String spreadsheetId = "1R9kkICgd6y7T152IvJ4g5yQDnk7NmzKkuwnyw660FwA";
+        Integer id = getSheetId().getValue();
+
+        List<Request> requests = new ArrayList<>();
+        for (String arg : args) {
+            String[] splited = arg.split(",");
+            if (splited == null) {
                 return;
             }
-            id = sheetId.getValue();
-            args = Arrays.copyOfRange(args, 1, args.length);
-        }
 
-        String spreadsheetId = "1R9kkICgd6y7T152IvJ4g5yQDnk7NmzKkuwnyw660FwA";
-
-        BatchUpdateSpreadsheetRequest batchRequest = new BatchUpdateSpreadsheetRequest();
-        for (String arg : args) {
-            CellData cell = new CellData();
-            cell.setUserEnteredValue(new ExtendedValue().setStringValue(arg));
-
-            String fields = "userEnteredValue" + (validate(arg, cell) ? ", userEnteredFormat.numberFormat" : "");
-
-            List<CellData> cells = Arrays.asList(cell);
+            List<CellData> cells = new ArrayList<>();
+            for (String s : splited) {
+                cells.add(new CellData().setUserEnteredValue(new ExtendedValue().setStringValue(s)));
+            }
             List<RowData> rows = Arrays.asList(new RowData().setValues(cells));
-
-            AppendCellsRequest appendRequest = new AppendCellsRequest();
-            appendRequest.setSheetId(id).setRows(rows).setFields(fields);
-
-            batchRequest.setRequests(Arrays.asList(new Request().setAppendCells(appendRequest)));
-
-            spreadsheets.batchUpdate(spreadsheetId, batchRequest).execute();
+            requests.add(new Request().setAppendCells(new AppendCellsRequest().setSheetId(id).setRows(rows).setFields("userEnteredValue")));
         }
+
+        spreadsheets.batchUpdate(spreadsheetId, new BatchUpdateSpreadsheetRequest().setRequests(requests)).execute();
     }
 
-    private static GoogleSpreadsheetID getSheetId(String...args) {
+    private static GoogleSpreadsheetID getSheetId() {
         try {
-            return GoogleSpreadsheetID.findByValue(Integer.parseInt(args[0]));
-        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            return GoogleSpreadsheetID.findByValue(Integer.parseInt(prop("quickstart.gid")));
+        } catch (ArrayIndexOutOfBoundsException | ClassCastException | NumberFormatException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    private static boolean validate(String arg, CellData cell) {
-        NumberFormat nf = new NumberFormat();
-        if (arg.matches(NUMBER_REGEX)) {
-            nf.setType("NUMBER");
-        } else if (arg.replaceAll("-", "/").matches(DATE_REGEX)) {
-            nf.setType("DATE");
-        } else {
-            return false;
+    private static String prop(String name) {
+        try {
+            return (String) pr.prop(name);
+        } catch (ClassCastException e) {
+            return null;
         }
-
-        cell.setUserEnteredFormat(new CellFormat().setNumberFormat(nf));
-        return true;
     }
 
 }
