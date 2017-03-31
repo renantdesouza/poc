@@ -17,10 +17,10 @@ public class Quickstart {
 
     private static final String GID = pr.stringProp(QUICKSTART_GID);
     private static final String SPREADSHEET_ID = pr.stringProp(QUICKSTART_SPREADSHEET_ID);
-    public static final String MODE = pr.stringProp(QUICKSTART_MODE);
+    public static String MODE = pr.stringProp(QUICKSTART_MODE);
 
-    private static final String MODE_WRITE = "write";
-    private static final String MODE_READ = "read";
+    public static final String MODE_WRITE = "write";
+    public static final String MODE_READ = "read";
 
     private static Sheets.Spreadsheets spreadsheets;
 
@@ -34,6 +34,8 @@ public class Quickstart {
     }
 
     public static void main(String...args) {
+        ManageFunction.changeValue();
+
         try {
             if (MODE.equalsIgnoreCase(MODE_WRITE)) {
                 write(DocumentAccess.scannedValues());
