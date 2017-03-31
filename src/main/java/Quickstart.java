@@ -19,6 +19,9 @@ public class Quickstart {
     private static final String SPREADSHEET_ID = prop(QUICKSTART_SPREADSHEET_ID);
     private static final String MODE = prop(QUICKSTART_MODE);
 
+    private static final String MODE_WRITE = "write";
+    private static final String MODE_READ = "read";
+
     private static Sheets.Spreadsheets spreadsheets;
 
     static {
@@ -47,9 +50,9 @@ public class Quickstart {
 
     public static void main(String...args) {
         try {
-            if (MODE.equalsIgnoreCase("write")) {
+            if (MODE.equalsIgnoreCase(MODE_WRITE)) {
                 write(docValues());
-            } else if (MODE.equalsIgnoreCase("read")){
+            } else if (MODE.equalsIgnoreCase(MODE_READ)){
                 print();
             } else {
                 System.out.println("Invalid value!");
@@ -74,9 +77,7 @@ public class Quickstart {
             return;
         }
 
-        String range = sheetId.getDesc();
-
-        List<List<Object>> values = spreadsheets.values().get(prop("quickstart.spreadsheet.id"), range).execute().getValues();
+        List<List<Object>> values = spreadsheets.values().get(SPREADSHEET_ID, sheetId.getDesc()).execute().getValues();
         if (values == null || values.size() == 0) {
             return;
         }
@@ -105,11 +106,13 @@ public class Quickstart {
 
             rows.add(new RowData().setValues(cells));
         }
-        Integer id = getSheetId().getValue();
+        spreadsheets.batchUpdate(SPREADSHEET_ID, request(rows)).execute();
+    }
 
+    private static BatchUpdateSpreadsheetRequest request(List<RowData> rows) {
+        Integer id = getSheetId().getValue();
         AppendCellsRequest append = new AppendCellsRequest().setSheetId(id).setRows(rows).setFields("userEnteredValue");
-        List<Request> requests = Arrays.asList(new Request().setAppendCells(append));
-        spreadsheets.batchUpdate(SPREADSHEET_ID, new BatchUpdateSpreadsheetRequest().setRequests(requests)).execute();
+        return new BatchUpdateSpreadsheetRequest().setRequests(Arrays.asList(new Request().setAppendCells(append)));
     }
 
     private static GoogleSpreadsheetID getSheetId() {
