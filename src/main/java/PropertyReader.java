@@ -9,7 +9,7 @@ public class PropertyReader {
 
     public PropertyReader(String fileName) {
         try {
-            URL url = PropertyReader.class.getResource("quickstart.properties");
+            URL url = PropertyReader.class.getResource(fileName);
             if (url == null) {
                 return;
             }
