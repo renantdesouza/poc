@@ -2,10 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b20155ff-ce50-41a0-a02e-0e46be12a79e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/1.4/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/1.4/taskArtifacts/fileHashes.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/1.4/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/1.4/taskArtifacts/fileSnapshots.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/1.4/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/1.4/taskArtifacts/taskArtifacts.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/GoogleSpreadsheetID.class" afterPath="$PROJECT_DIR$/build/classes/main/GoogleSpreadsheetID.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/PropertyReader.class" afterPath="$PROJECT_DIR$/build/classes/main/PropertyReader.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/Quickstart.class" afterPath="$PROJECT_DIR$/build/classes/main/Quickstart.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/resources/main/quickstart.properties" afterPath="$PROJECT_DIR$/build/resources/main/quickstart.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/spreadsheet-poc/quickstart.properties" afterPath="$PROJECT_DIR$/out/production/spreadsheet-poc/quickstart.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/GoogleSpreadsheetID.java" afterPath="$PROJECT_DIR$/src/main/java/GoogleSpreadsheetID.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Quickstart.java" afterPath="$PROJECT_DIR$/src/main/java/Quickstart.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/quickstart.properties" afterPath="$PROJECT_DIR$/src/main/resources/quickstart.properties" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -41,21 +47,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Quickstart.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Quickstart.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Quickstart.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="126">
               <caret line="13" column="60" lean-forward="true" selection-start-line="13" selection-start-column="60" selection-end-line="13" selection-end-column="60" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GoogleSpreadsheetID.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/GoogleSpreadsheetID.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="10" column="22" lean-forward="true" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -81,11 +77,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="quickstart.properties" pinned="false" current-in-tab="false">
+      <file leaf-file-name="quickstart.properties" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/resources/quickstart.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="3" column="20" lean-forward="false" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="20" />
+            <state relative-caret-position="180">
+              <caret line="10" column="23" lean-forward="false" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -611,9 +607,9 @@
         <option value="$PROJECT_DIR$/src/main/java/Auth.java" />
         <option value="$PROJECT_DIR$/src/main/java/DocumentAccess.java" />
         <option value="$PROJECT_DIR$/src/main/java/PropertyReader.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/quickstart.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/GoogleSpreadsheetID.java" />
         <option value="$PROJECT_DIR$/src/main/java/Quickstart.java" />
+        <option value="$PROJECT_DIR$/src/main/java/GoogleSpreadsheetID.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/quickstart.properties" />
       </list>
     </option>
   </component>
@@ -1244,7 +1240,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490966928330</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="alterações">
+      <created>1490974117155</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1490974117155</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1617,10 +1620,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/quickstart.properties">
+    <entry file="file://$PROJECT_DIR$/src/main/java/PropertyReader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="20" lean-forward="false" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="20" />
+        <state relative-caret-position="108">
+          <caret line="9" column="41" lean-forward="false" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="41" />
           <folding />
         </state>
       </provider>
@@ -1633,18 +1636,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/PropertyReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="9" column="41" lean-forward="false" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/GoogleSpreadsheetID.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="10" column="22" lean-forward="true" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+        <state relative-caret-position="162">
+          <caret line="9" column="66" lean-forward="false" selection-start-line="9" selection-start-column="66" selection-end-line="9" selection-end-column="66" />
           <folding />
         </state>
       </provider>
@@ -1653,6 +1648,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
           <caret line="13" column="60" lean-forward="true" selection-start-line="13" selection-start-column="60" selection-end-line="13" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/quickstart.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="23" lean-forward="false" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
           <folding />
         </state>
       </provider>
