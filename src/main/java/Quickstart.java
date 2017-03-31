@@ -52,7 +52,7 @@ public class Quickstart {
         if (sheetId == null) return;
 
         List<List<Object>> values = spreadsheets.values().get(SPREADSHEET_ID, sheetId.getDesc()).execute().getValues();
-        if (values == null || values.size() == 0) return;
+        if (values == null || values.size() == 0)return;
 
         for (List row : values) {
             String str = "";
