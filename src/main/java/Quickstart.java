@@ -37,7 +37,7 @@ public class Quickstart {
         try {
             if (MODE.equalsIgnoreCase(MODE_WRITE)) {
                 write(DocumentAccess.scannedValues());
-            } else if (MODE.equalsIgnoreCase(MODE_READ)){
+            } else if (MODE.equalsIgnoreCase(MODE_READ)) {
                 print();
             } else {
                 System.out.println("Invalid value!");
@@ -47,7 +47,7 @@ public class Quickstart {
         }
     }
 
-    private static void print() throws IOException {
+    private static void print() throws IOException { // TODO REMOVE THIS METHOD
         GoogleSpreadsheetID sheetId = getSheetId();
         if (sheetId == null) return;
 

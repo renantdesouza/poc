@@ -5,7 +5,8 @@ public enum GoogleSpreadsheetID {
 
     TEST(0, "teste"),
     VRAU(712794908, "vrau"),
-    GENERAL_DASHBOARD(1642845870, "General_Dashboard");
+    GENERAL_DASHBOARD(1642845870, "General_Dashboard"),
+    PRESENCE_LATEST(1867670092, "4a89830f-bd7b-4d08-b1ae-8023611");
 
     private int value;
     private String desc;
