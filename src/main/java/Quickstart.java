@@ -49,14 +49,10 @@ public class Quickstart {
 
     private static void print() throws IOException {
         GoogleSpreadsheetID sheetId = getSheetId();
-        if (sheetId == null) {
-            return;
-        }
+        if (sheetId == null) return;
 
         List<List<Object>> values = spreadsheets.values().get(SPREADSHEET_ID, sheetId.getDesc()).execute().getValues();
-        if (values == null || values.size() == 0) {
-            return;
-        }
+        if (values == null || values.size() == 0)return;
 
         for (List row : values) {
             String str = "";
@@ -69,9 +65,7 @@ public class Quickstart {
     }
 
     private static void write(List<String> args) throws IOException {
-        if (args == null) {
-            return;
-        }
+        if (args == null) return;
 
         List<RowData> rows = new ArrayList<>();
         for (String arg : args) {
@@ -86,9 +80,10 @@ public class Quickstart {
     }
 
     private static BatchUpdateSpreadsheetRequest request(List<RowData> rows) {
-        Integer id = getSheetId().getValue();
-        AppendCellsRequest append = new AppendCellsRequest().setSheetId(id).setRows(rows).setFields("userEnteredValue");
-        return new BatchUpdateSpreadsheetRequest().setRequests(Arrays.asList(new Request().setAppendCells(append)));
+        AppendCellsRequest append = new AppendCellsRequest();
+        append.setSheetId(getSheetId().getValue()).setRows(rows).setFields("userEnteredValue");
+        List<Request> requests = Arrays.asList(new Request().setAppendCells(append));
+        return new BatchUpdateSpreadsheetRequest().setRequests(requests);
     }
 
     private static GoogleSpreadsheetID getSheetId() {
