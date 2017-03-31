@@ -73,7 +73,6 @@ public class Quickstart {
             for (String cellValue : arg.split(",")) {
                 cells.add(new CellData().setUserEnteredValue(new ExtendedValue().setStringValue(cellValue)));
             }
-
             rows.add(new RowData().setValues(cells));
         }
         spreadsheets.batchUpdate(SPREADSHEET_ID, request(rows)).execute();
