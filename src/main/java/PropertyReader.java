@@ -23,4 +23,12 @@ public class PropertyReader {
         return props.get(obj);
     }
 
+    public String stringProp(String name) {
+        try {
+            return (String) prop(name);
+        } catch (ClassCastException e) {
+            return null;
+        }
+    }
+
 }

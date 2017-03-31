@@ -1,10 +1,10 @@
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.*;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Quickstart {
 
@@ -15,9 +15,9 @@ public class Quickstart {
     private static final String QUICKSTART_GID = "quickstart.gid";
     private static final String QUICKSTART_MODE = "quickstart.mode";
 
-    private static final String GID = prop(QUICKSTART_GID);
-    private static final String SPREADSHEET_ID = prop(QUICKSTART_SPREADSHEET_ID);
-    private static final String MODE = prop(QUICKSTART_MODE);
+    private static final String GID = pr.stringProp(QUICKSTART_GID);
+    private static final String SPREADSHEET_ID = pr.stringProp(QUICKSTART_SPREADSHEET_ID);
+    public static final String MODE = pr.stringProp(QUICKSTART_MODE);
 
     private static final String MODE_WRITE = "write";
     private static final String MODE_READ = "read";
@@ -33,25 +33,10 @@ public class Quickstart {
         }
     }
 
-    private static List<String> scannedValues() {
-        Scanner scan = getScan();
-        if (scan == null) {
-            return null;
-        }
-
-        List<String> strs = new ArrayList<>();
-        int i = 0;
-        for (; scan.hasNext(); i++) {
-            strs.add(scan.nextLine());
-            scan.reset();
-        }
-        return i == 0 ? null : strs;
-    }
-
     public static void main(String...args) {
         try {
             if (MODE.equalsIgnoreCase(MODE_WRITE)) {
-                write(scannedValues());
+                write(DocumentAccess.scannedValues());
             } else if (MODE.equalsIgnoreCase(MODE_READ)){
                 print();
             } else {
@@ -59,15 +44,6 @@ public class Quickstart {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private static Scanner getScan() {
-        try {
-            return new Scanner(new File("/home/renan.souza/doc-" + QUICKSTART_MODE));
-        } catch (FileNotFoundException fnfe) {
-            fnfe.printStackTrace();
-            return null;
         }
     }
 
@@ -120,14 +96,6 @@ public class Quickstart {
             return GoogleSpreadsheetID.findByValue(Integer.parseInt(GID));
         } catch (ArrayIndexOutOfBoundsException | ClassCastException | NumberFormatException e) {
             e.printStackTrace();
-            return null;
-        }
-    }
-
-    private static String prop(String name) {
-        try {
-            return (String) pr.prop(name);
-        } catch (ClassCastException e) {
             return null;
         }
     }
