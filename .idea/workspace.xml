@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b20155ff-ce50-41a0-a02e-0e46be12a79e" name="Default" comment="alteraçÕes">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/1.4/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/1.4/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/1.4/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/1.4/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/1.4/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/1.4/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/Quickstart.class" afterPath="$PROJECT_DIR$/build/classes/main/Quickstart.class" />
+    <list default="true" id="b20155ff-ce50-41a0-a02e-0e46be12a79e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Quickstart.java" afterPath="$PROJECT_DIR$/src/main/java/Quickstart.java" />
     </list>
@@ -45,21 +41,11 @@
       <file leaf-file-name="Quickstart.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Quickstart.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-441">
-              <caret line="74" column="35" lean-forward="false" selection-start-line="74" selection-start-column="28" selection-end-line="74" selection-end-column="35" />
+            <state relative-caret-position="846">
+              <caret line="50" column="44" lean-forward="true" selection-start-line="50" selection-start-column="44" selection-end-line="50" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="quickstart.properties" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/quickstart.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="3" column="21" lean-forward="false" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="21" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -76,7 +62,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>scanner</find>
       <find>values</find>
       <find>safePrint</find>
       <find>safeGetSheetId</find>
@@ -103,9 +88,10 @@
       <find>getSheetId</find>
       <find>MODE</find>
       <find>ValueRange</find>
-      <find>docValues</find>
       <find>static</find>
       <find>quickstart.spreadsheet.</find>
+      <find>prop(</find>
+      <find>docValues</find>
     </findStrings>
     <replaceStrings>
       <replace>batchRequests</replace>
@@ -117,6 +103,7 @@
       <replace>print</replace>
       <replace>write</replace>
       <replace>getSheetId</replace>
+      <replace>scannedValues</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -583,8 +570,8 @@
         <option value="$PROJECT_DIR$/src/main/java/PropertyReader.java" />
         <option value="$PROJECT_DIR$/src/main/java/Auth.java" />
         <option value="$PROJECT_DIR$/src/main/java/GoogleSpreadsheetID.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Quickstart.java" />
         <option value="$PROJECT_DIR$/src/main/resources/quickstart.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/Quickstart.java" />
       </list>
     </option>
   </component>
@@ -1169,7 +1156,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490902986165</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="alterações">
+      <created>1490961102320</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1490961102320</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1246,7 +1240,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="ajuste" />
     <MESSAGE value="alteraçÕes" />
-    <option name="LAST_COMMIT_MESSAGE" value="alteraçÕes" />
+    <MESSAGE value="alterações" />
+    <option name="LAST_COMMIT_MESSAGE" value="alterações" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1568,8 +1563,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Quickstart.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-441">
-          <caret line="74" column="35" lean-forward="false" selection-start-line="74" selection-start-column="28" selection-end-line="74" selection-end-column="35" />
+        <state relative-caret-position="846">
+          <caret line="50" column="44" lean-forward="true" selection-start-line="50" selection-start-column="44" selection-end-line="50" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

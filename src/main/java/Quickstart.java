@@ -33,7 +33,7 @@ public class Quickstart {
         }
     }
 
-    private static List<String> docValues() {
+    private static List<String> scannedValues() {
         Scanner scan = getScan();
         if (scan == null) {
             return null;
@@ -51,7 +51,7 @@ public class Quickstart {
     public static void main(String...args) {
         try {
             if (MODE.equalsIgnoreCase(MODE_WRITE)) {
-                write(docValues());
+                write(scannedValues());
             } else if (MODE.equalsIgnoreCase(MODE_READ)){
                 print();
             } else {
@@ -64,7 +64,7 @@ public class Quickstart {
 
     private static Scanner getScan() {
         try {
-            return new Scanner(new File("/home/renan.souza/doc-" + prop("quickstart.mode")));
+            return new Scanner(new File("/home/renan.souza/doc-" + QUICKSTART_MODE));
         } catch (FileNotFoundException fnfe) {
             fnfe.printStackTrace();
             return null;
