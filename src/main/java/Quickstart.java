@@ -34,8 +34,6 @@ public class Quickstart {
     }
 
     public static void main(String...args) {
-        ManageFunction.changeValue();
-
         try {
             if (MODE.equalsIgnoreCase(MODE_WRITE)) {
                 write(DocumentAccess.scannedValues());
