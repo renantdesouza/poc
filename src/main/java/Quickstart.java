@@ -22,23 +22,23 @@ public class Quickstart {
     public static final String MODE_WRITE = "write";
     public static final String MODE_READ = "read";
 
-    private static Sheets.Spreadsheets spreadsheets;
+    private Sheets.Spreadsheets spreadsheets;
 
-    static {
+    public Quickstart() {
         try {
             spreadsheets = Auth.getSheetsService().spreadsheets();
         } catch (Throwable t) {
             t.printStackTrace();
-            System.exit(1);
         }
     }
 
     public static void main(String...args) {
         try {
+            Quickstart qs = new Quickstart();
             if (MODE.equalsIgnoreCase(MODE_WRITE)) {
-                write(DocumentAccess.scannedValues());
+                qs.write(DocumentAccess.scannedValues());
             } else if (MODE.equalsIgnoreCase(MODE_READ)) {
-                print();
+                qs.print();
             } else {
                 System.out.println("Invalid value!");
             }
@@ -47,7 +47,7 @@ public class Quickstart {
         }
     }
 
-    private static void print() throws IOException {
+    private void print() throws IOException {
         GoogleSpreadsheetID sheetId = getSheetId();
         if (sheetId == null) return;
 
@@ -64,7 +64,7 @@ public class Quickstart {
         }
     }
 
-    private static void write(List<String> args) throws IOException {
+    private void write(List<String> args) throws IOException {
         if (args == null) return;
 
         List<RowData> rows = new ArrayList<>();
@@ -78,14 +78,14 @@ public class Quickstart {
         spreadsheets.batchUpdate(SPREADSHEET_ID, request(rows)).execute();
     }
 
-    private static BatchUpdateSpreadsheetRequest request(List<RowData> rows) {
+    private BatchUpdateSpreadsheetRequest request(List<RowData> rows) {
         AppendCellsRequest append = new AppendCellsRequest();
         append.setSheetId(getSheetId().getValue()).setRows(rows).setFields("userEnteredValue");
         List<Request> requests = Arrays.asList(new Request().setAppendCells(append));
         return new BatchUpdateSpreadsheetRequest().setRequests(requests);
     }
 
-    private static GoogleSpreadsheetID getSheetId() {
+    private GoogleSpreadsheetID getSheetId() {
         try {
             return GoogleSpreadsheetID.findByValue(Integer.parseInt(GID));
         } catch (ArrayIndexOutOfBoundsException | ClassCastException | NumberFormatException e) {

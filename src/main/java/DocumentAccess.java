@@ -8,7 +8,7 @@ public class DocumentAccess {
 
     private static final String PATH = "/home/renan.souza/doc-" + Quickstart.MODE;
 
-    public static List<String> scannedValues() {
+    public synchronized static List<String> scannedValues() {
         Scanner scan = getScan();
         if (scan == null) {
             return null;
